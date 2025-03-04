@@ -1,0 +1,62 @@
+#control-panel {
+  display: flex;
+  background-color: brown;
+  border: 2px solid;
+  border-radius: 10px;
+  padding: 20px;
+  align-items: center;
+}
+
+.launchButton {
+  background: none;
+  border: none;
+  transition: all 0.2s ease-in-out; /* Плавный переход */
+  font-size: 20px;
+}
+.launchButton:hover {
+  font-size: 25px;
+  transform: translateY(-5px); /* Поднимаем элемент вверх */
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.rewindMusic {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 300px;
+  height: 15px;
+  background: #52050585;
+  border-radius: 5px;
+}
+
+.rewindMusic::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 3px;
+  height: 15px;
+  background: #db611b;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.rewindVolume {
+  /*настройка полоски*/
+  -webkit-appearance: none; /*убирает стандартные настройки полоски*/
+  appearance: none;
+  background: #52050585;
+  border-radius: 5px;
+  height: 10px;
+}
+.rewindVolume::-webkit-slider-thumb {
+  /*убирает стандартный ползунок,настройка ползунка*/
+  -webkit-appearance: none;
+  appearance: none;
+  width: 10px;
+  height: 10px;
+  background: #db611b;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.time {
+  font-size: 20px;
+  margin: 1px;
+}

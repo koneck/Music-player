@@ -1,0 +1,14 @@
+.navigate-bar {
+  width: 250px;
+  background: #343434;
+  padding: 20px;
+}
+
+.custom-input {
+  display: flex;
+  justify-content: center;
+}
+.custom-input:hover {
+  border: 2px solid;
+  cursor: pointer;
+}
