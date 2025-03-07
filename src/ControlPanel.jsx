@@ -4,8 +4,7 @@ import { useState } from "react";
 export default function ControlPanel({ data }) {
   const [launch, setLaunch] = useState(false);
 
-  const { audioRef, currentTime, duration, handleChange } = data;
-
+  const { audioRef, currentTime, duration, handleChange,selectIndexDataFiles } = data;
   function launchPauseSound() {
     if (!audioRef.current.paused && !launch) {
       audioRef.current.pause();
@@ -33,13 +32,13 @@ export default function ControlPanel({ data }) {
           className="rewindMusic"
           type="range"
           min="0"
-          max={duration}
+          max={duration[selectIndexDataFiles]}
           step="any"
           onChange={handleChange}
           value={currentTime}
         ></input>
         <div className="soundTime">
-          <FormatTime time={duration} />
+          <FormatTime time={duration[selectIndexDataFiles]} />
         </div>
         <input
           className="rewindVolume"

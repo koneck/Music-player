@@ -10,9 +10,8 @@ function App() {
   const audioRef = useRef(null);
   const [dataFiles, setDataFiles] = useState([]);
   const [selectIndexDataFiles, setSelectIndexDataFailes] = useState(null);
-  const [duration, setDuration] = useState(0);
+  const [duration, setDuration] = useState({});
   const [currentTime, setCurrentTime] = useState(0);
-
 
   function openFile(e) {
     const files = Array.from(e.target.files);
@@ -20,7 +19,11 @@ function App() {
       if (file.type === "audio/mpeg") {
         let reader = new FileReader();
         reader.onload = () => {
-          let newDataFile = { name: file.name, src: reader.result, durati: duration, };
+          let newDataFile = {
+            name: file.name,
+            src: reader.result,
+            durati: duration,
+          };
           return dataFiles.some((data) => data.name == newDataFile.name)
             ? 0
             : setDataFiles((prevDataFile) => [...prevDataFile, newDataFile]);
@@ -32,8 +35,13 @@ function App() {
     });
   }
 
-  function handleOnloadedMetaData() {
-    setDuration(audioRef.current.duration);
+  function handleOnloadedMetaData(index) {
+    // console.log(duration);
+    setDuration((prevDuration) => ({
+      ...prevDuration,
+      [index]: audioRef.current.duration,
+    }));
+    // setDuration(audioRef.current.duration);
   }
 
   function handleCurrentTime() {
@@ -66,7 +74,9 @@ function App() {
               // controls
               // src={data.src}
               ref={audioRef}
-              onLoadedMetadata={handleOnloadedMetaData}
+              onLoadedMetadata={() =>
+                handleOnloadedMetaData(selectIndexDataFiles)
+              }
               onTimeUpdate={handleCurrentTime}
             ></audio>
             <ul className="songs-list">
@@ -78,7 +88,7 @@ function App() {
                     onDoubleClick={() => handleTrackClick(index)}
                   >
                     {data.name.substring(0, data.name.indexOf("(www")).trim()}
-                    <span className="liFormatTime">"time"</span>
+                    <span className="liFormatTime"><FormatTime time={duration[index]}/></span>
                   </li>
                 ))}
             </ul>
@@ -91,6 +101,7 @@ function App() {
                 currentTime,
                 duration,
                 handleChange,
+                selectIndexDataFiles,
               }}
             />
           </div>
