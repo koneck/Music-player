@@ -22,12 +22,22 @@ function App() {
           let newDataFile = {
             name: file.name,
             src: reader.result,
-            durati: duration,
           };
+
+          let tempAudio = new Audio();
+          tempAudio.src = reader.result;
+          tempAudio.onloadedmetadata = () => {
+            setDuration((prevDuration) => ({
+              ...prevDuration,
+              [file.name]: tempAudio.duration,
+            }));
+          };
+
           return dataFiles.some((data) => data.name == newDataFile.name)
             ? 0
             : setDataFiles((prevDataFile) => [...prevDataFile, newDataFile]);
         };
+
         reader.readAsDataURL(file);
       } else {
         return;
@@ -36,12 +46,10 @@ function App() {
   }
 
   function handleOnloadedMetaData(index) {
-    // console.log(duration);
     setDuration((prevDuration) => ({
       ...prevDuration,
       [index]: audioRef.current.duration,
     }));
-    // setDuration(audioRef.current.duration);
   }
 
   function handleCurrentTime() {
@@ -59,6 +67,12 @@ function App() {
     audioRef.current.src = dataFiles[index].src;
     audioRef.current.play();
   }
+
+  function handleTrackEnd() {
+    selectIndexDataFiles < dataFiles.length - 1
+      ? handleTrackClick(selectIndexDataFiles + 1)
+      : (audioRef.current.currentTime = 0);
+  }
   return (
     <>
       <div id="main-container">
@@ -71,13 +85,12 @@ function App() {
 
           <div className="songs-container">
             <audio
-              // controls
-              // src={data.src}
               ref={audioRef}
               onLoadedMetadata={() =>
                 handleOnloadedMetaData(selectIndexDataFiles)
               }
               onTimeUpdate={handleCurrentTime}
+              onEnded={handleTrackEnd}
             ></audio>
             <ul className="songs-list">
               {dataFiles &&
@@ -88,7 +101,9 @@ function App() {
                     onDoubleClick={() => handleTrackClick(index)}
                   >
                     {data.name.substring(0, data.name.indexOf("(www")).trim()}
-                    <span className="liFormatTime"><FormatTime time={duration[index]}/></span>
+                    <span className="liFormatTime">
+                      <FormatTime time={duration[data.name]} />
+                    </span>
                   </li>
                 ))}
             </ul>
@@ -112,6 +127,6 @@ function App() {
 }
 
 export default App;
-// исправить привязку времени только к последнему выброному треку, добавить объект с временем треков
-//добавить логику включнеия следующего трека если он есть.
-//добавить кнопки 1)повтора,2)случайной песни,3)стрелки перехода по трекам.
+// исправить привязку времени только к последнему выброному треку, добавить объект с временем треков +
+//добавить логику включнеия следующего трека если он есть. +
+//добавить кнопки 1)повтора,2)случайной песни,3)стрелки перехода по трекам. -

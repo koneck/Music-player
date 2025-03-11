@@ -10,7 +10,7 @@
 .launchButton {
   background: none;
   border: none;
-  transition: all 0.2s ease-in-out; /* Плавный переход */
+  transition: all 0.2s ease-in-out; 
   font-size: 20px;
 }
 .launchButton:hover {
@@ -39,15 +39,14 @@
 }
 
 .rewindVolume {
-  /*настройка полоски*/
-  -webkit-appearance: none; /*убирает стандартные настройки полоски*/
+  -webkit-appearance: none;
   appearance: none;
   background: #52050585;
   border-radius: 5px;
   height: 10px;
+  box-sizing: border-box;
 }
 .rewindVolume::-webkit-slider-thumb {
-  /*убирает стандартный ползунок,настройка ползунка*/
   -webkit-appearance: none;
   appearance: none;
   width: 10px;
@@ -55,6 +54,10 @@
   background: #db611b;
   border-radius: 10px;
   cursor: pointer;
+}
+.soundTime{
+  box-sizing: border-box;
+  padding: 10px;
 }
 .time {
   font-size: 20px;
