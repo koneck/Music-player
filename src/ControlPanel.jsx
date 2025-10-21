@@ -39,7 +39,7 @@ export default function ControlPanel({ data }) {
           ) : (
             <span>&#9654;</span>
           )}
-          {/* неправильно показывает pause или play*/}
+          {
         </button>
         <button onClick={onLoop}>
           {loop ? <span>on loop</span> : <span>off loop</span>}
